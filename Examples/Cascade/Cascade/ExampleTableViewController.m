@@ -35,6 +35,11 @@
     
     // add header view
     UIImageView* header = [[UIImageView alloc] initWithFrame: CGRectMake(0.0, 0.0, self.view.bounds.size.width, 45.0)];
+   
+#ifdef NO_ARC
+   [ header autorelease ];
+#endif
+   
     [header setImage: [UIImage imageNamed:@"ToolBar_479x45.png"]];
     [self.segmentedView setHeaderView: header];
     
@@ -86,6 +91,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+#ifdef NO_ARC
+       [ cell autorelease ];
+#endif
     }
     
     // Configure the cell...
@@ -108,8 +116,14 @@
     
     if (indexPath.row%2 == 0) {
         viewController = [[ExampleTableViewController alloc] initWithTableViewStyle: UITableViewStylePlain];
+#ifdef NO_ARC
+       [ viewController autorelease ];
+#endif
     } else {
         viewController = [[ExampleWebViewController alloc] init];
+#ifdef NO_ARC
+       [ viewController autorelease ];
+#endif
     } 
     
     [self pushDetailViewController:viewController animated:YES];

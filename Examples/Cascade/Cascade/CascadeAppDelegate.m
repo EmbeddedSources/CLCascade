@@ -21,6 +21,11 @@
     
     ExampleNavigationController* cascadeNavigationController = [[ExampleNavigationController alloc] init];
     ExampleCategoriesViewController* categoriesViewController = [[ExampleCategoriesViewController alloc] initWithNibName:@"ExampleCategoriesViewController" bundle:nil];
+   
+#ifdef NO_ARC
+   [ cascadeNavigationController autorelease ];
+   [ categoriesViewController autorelease    ];
+#endif
     [categoriesViewController setCascadeNavigationController: cascadeNavigationController];
     
     [self.viewController setCategoriesViewController: categoriesViewController];

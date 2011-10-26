@@ -39,6 +39,9 @@
     
     // add background
     UIView* backgroundView = [[UIView alloc] init];
+#ifdef NO_ARC
+   [ backgroundView autorelease ];
+#endif
     [backgroundView setBackgroundColor: [UIColor colorWithPatternImage: [UIImage imageNamed: @"brown_bg_128x128"]]];
     [self setBackgroundView:backgroundView];
     

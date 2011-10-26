@@ -41,6 +41,11 @@
 
     // set background of tableview
     UIView* backgrounView = [[UIView alloc] initWithFrame: self.tableView.bounds];
+   
+#ifdef NO_ARC
+   [ backgrounView autorelease ];
+#endif
+   
     [backgrounView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"brown_bg_128x128.png"]]];
     [self.tableView setBackgroundView:backgrounView];
 }
@@ -82,16 +87,28 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    if (cell == nil) 
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
+       
+#ifdef NO_ARC
+       [ cell autorelease ];
+#endif
+       
         [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:17.0]];
         [cell.textLabel setTextColor: [UIColor colorWithRed:0.894117 green:0.839215 blue:0.788235 alpha:1.0]];
         [cell.textLabel setShadowColor: [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75]];
         [cell.textLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
 
         UIImage *backgroundImage = [[UIImage imageNamed:@"LightBackground.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:1.0];
-        cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+       
+        UIImageView* background_view_ = [[UIImageView alloc] initWithImage:backgroundImage];
+       
+#ifdef NO_ARC
+       [ background_view_ autorelease ];
+#endif       
+       
+        cell.backgroundView = background_view_;
         cell.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         cell.backgroundView.frame = cell.bounds;
         cell.backgroundView.alpha = 0.5;
@@ -109,6 +126,9 @@
 {
     // if you select row, then create and push custom UIViewController
     ExampleTableViewController* rootTableViewController = [[ExampleTableViewController alloc] initWithTableViewStyle: UITableViewStylePlain];
+#ifdef NO_ARC
+   [ rootTableViewController autorelease ];
+#endif
     [self.cascadeNavigationController setRootViewController:rootTableViewController animated:YES];
     
 }
